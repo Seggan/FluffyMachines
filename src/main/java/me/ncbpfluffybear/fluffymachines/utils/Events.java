@@ -6,7 +6,6 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerToggleSneakEvent;
 import org.bukkit.inventory.ItemStack;
@@ -39,20 +38,8 @@ public class Events implements Listener {
             Entity target = e.getRightClicked();
             if (target instanceof Player && WateringCan.updateUses(p, item, 3)) {
                 Utils.send(p, "&bSplash!");
-                Utils.send((Player) target, "&bYou were splashed by " + p.getDisplayName() + "!");
+                Utils.send((Player) target, "&bYou were splashed by " + p + "!");
                 ((Player) target).addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 60, 1));
-            }
-        }
-    }
-
-    @EventHandler
-    public void onPlayerDamage(EntityDamageEvent e) {
-        if (e.getEntity() instanceof Player && ((Player) e.getEntity()).getEquipment() != null) {
-            Player p = (Player) e.getEntity();
-            ItemStack helmet = p.getEquipment().getHelmet();
-            if (helmet != null && helicopterHat.isItem(helmet)
-            ) {
-                e.setCancelled(true);
             }
         }
     }
